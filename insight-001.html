@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Hidden Cost of Legacy Excel Models | Greywood Analytics</title>
+<meta name="description" content="Undocumented spreadsheets don't just carry operational risk — they carry regulatory and migration risk that compounds silently over years. Greywood Analytics examines how that cost accumulates, and what boards consistently underestimate.">
+<meta name="keywords" content="EUC risk, legacy Excel models, spreadsheet governance, SS1/23, IFRS 9, data migration risk, regulatory reporting, PRA model risk management">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:    #1A1F4E;
+    --gold:    #C9A84C;
+    --gold-lt: #E8D5A3;
+    --white:   #FFFFFF;
+    --off-wht: #F8F6F2;
+    --grey:    #6B7280;
+    --dark:    #1A1A2E;
+    --light-grey: #F1F0EE;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--dark);
+    background: var(--white);
+    line-height: 1.7;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--navy);
+    padding: 16px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--gold);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-brand {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .nav-brand span { font-weight: 300; color: var(--gold-lt); font-style: italic; }
+
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: var(--gold-lt);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── ARTICLE HERO ── */
+  .article-hero {
+    background: var(--navy);
+    padding: 72px 48px 56px;
+  }
+
+  .article-hero-inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .article-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .article-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--navy);
+    background: var(--gold);
+    padding: 4px 12px;
+    border-radius: 2px;
+  }
+
+  .article-number {
+    font-size: 12px;
+    color: #8899BB;
+    letter-spacing: 1px;
+  }
+
+  .article-date {
+    font-size: 12px;
+    color: #8899BB;
+  }
+
+  .article-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  .article-hero-divider {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    margin: 24px 0;
+  }
+
+  .article-standfirst {
+    font-size: 17px;
+    color: var(--gold-lt);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+
+  /* Article hero image */
+  .article-hero-image {
+    width: 100%;
+    max-height: 480px;
+    object-fit: cover;
+    object-position: center 40%;
+    display: block;
+  }
+
+  .article-hero-image-wrap {
+    overflow: hidden;
+    border-bottom: 3px solid var(--gold);
+  }
+
+  /* ── ARTICLE BODY ── */
+  .article-body {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 64px 48px 80px;
+  }
+
+  /* Executive Summary Box */
+  .exec-summary {
+    background: var(--off-wht);
+    border: 1px solid #E0DDD8;
+    border-left: 5px solid var(--navy);
+    padding: 32px 36px;
+    margin-bottom: 56px;
+    border-radius: 0 2px 2px 0;
+  }
+
+  .exec-summary-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 16px;
+  }
+
+  .exec-summary p {
+    font-size: 15px;
+    color: #2A2A3E;
+    line-height: 1.75;
+    margin-bottom: 14px;
+  }
+
+  .exec-summary p:last-child { margin-bottom: 0; }
+  
+  .exec-summary p:last-child {
+    font-style: italic;
+    color: var(--navy);
+    font-weight: 500;
+  }
+
+  /* Section headings */
+  .article-body h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 20px;
+    margin-top: 52px;
+    line-height: 1.2;
+  }
+
+  .article-body h2:first-of-type { margin-top: 0; }
+
+  /* Body text */
+  .article-body p {
+    font-size: 16px;
+    color: #2A2A3E;
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  /* Pull quote */
+  .pull-quote {
+    border-left: 3px solid var(--gold);
+    padding: 8px 0 8px 28px;
+    margin: 40px 0;
+  }
+
+  .pull-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--navy);
+    line-height: 1.45;
+    margin: 0;
+    font-weight: 400;
+  }
+
+  /* Stat blocks */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 40px 0;
+  }
+
+  .stat-block {
+    background: var(--light-grey);
+    padding: 28px 24px;
+    border-top: 3px solid var(--gold);
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--grey);
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  .stat-source {
+    font-size: 10px;
+    color: #AAAAAA;
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* Regulatory callout */
+  .reg-callout {
+    background: var(--off-wht);
+    border: 1px solid #E0DDD8;
+    border-left: 4px solid var(--navy);
+    padding: 28px 32px;
+    margin: 40px 0;
+    border-radius: 0 2px 2px 0;
+  }
+
+  .reg-callout-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+
+  .reg-callout p {
+    font-size: 14.5px;
+    color: #2A2A3E;
+    margin-bottom: 8px;
+    line-height: 1.65;
+  }
+
+  .reg-callout p:last-child { margin-bottom: 0; }
+
+  /* How GA helps section */
+  .ga-helps {
+    background: var(--navy);
+    padding: 40px 36px;
+    margin: 48px 0;
+    border-radius: 2px;
+  }
+
+  .ga-helps-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .ga-helps h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 20px;
+    line-height: 1.3;
+  }
+
+  .ga-helps p {
+    font-size: 15px;
+    color: var(--gold-lt);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .ga-helps p:last-child { margin-bottom: 0; }
+
+  .deliverable-list {
+    list-style: none;
+    margin: 20px 0;
+  }
+
+  .deliverable-list li {
+    font-size: 14.5px;
+    color: var(--gold-lt);
+    padding: 8px 0;
+    padding-left: 20px;
+    position: relative;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    line-height: 1.5;
+  }
+
+  .deliverable-list li:last-child { border-bottom: none; }
+
+  .deliverable-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 13px;
+  }
+
+  /* Closing quote */
+  .closing-quote {
+    text-align: center;
+    padding: 48px 0 0;
+    border-top: 1px solid #E0DDD8;
+    margin-top: 56px;
+  }
+
+  .closing-quote blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-style: italic;
+    color: var(--navy);
+    line-height: 1.45;
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+
+  .closing-quote cite {
+    font-size: 12px;
+    color: var(--grey);
+    font-style: normal;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* CTA */
+  .article-cta {
+    background: var(--off-wht);
+    border: 1px solid #E0DDD8;
+    padding: 36px;
+    margin-top: 56px;
+    text-align: center;
+    border-radius: 2px;
+  }
+
+  .article-cta p {
+    font-size: 15px;
+    color: var(--grey);
+    margin-bottom: 20px;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--gold-lt); }
+
+  /* Back link */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 40px;
+    transition: gap 0.2s;
+  }
+
+  .back-link:hover { gap: 12px; }
+
+  /* Footer */
+  footer {
+    background: #11153A;
+    padding: 24px 48px;
+    text-align: center;
+    border-top: 1px solid rgba(201,168,76,0.2);
+  }
+
+  footer p { font-size: 12px; color: #6677AA; }
+  footer a { color: #6677AA; text-decoration: none; }
+
+  @media (max-width: 640px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .article-hero { padding: 48px 20px 40px; }
+    .article-body { padding: 40px 20px 60px; }
+    .exec-summary { padding: 24px 20px; }
+    .ga-helps { padding: 28px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-brand">GREYWOOD <span>Analytics</span></a>
+  <ul class="nav-links">
+    <li><a href="/#solution">What We Do</a></li>
+    <li><a href="/#deliverables">Deliverables</a></li>
+    <li><a href="/#why">Why Us</a></li>
+    <li><a href="/insights.html">Insights</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ARTICLE HERO -->
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <div class="article-meta">
+      <span class="article-tag">Excel Models</span>
+      <span class="article-number">Executive Brief 001</span>
+      
+    </div>
+    <h1>The Hidden Cost of Legacy Excel Models</h1>
+    <div class="article-hero-divider"></div>
+    <p class="article-standfirst">Undocumented spreadsheets don't just carry operational risk — they carry regulatory and migration risk that compounds silently over years. This Insight examines how that cost accumulates, and what boards consistently underestimate.</p>
+  </div>
+</div>
+
+
+<!-- ARTICLE HERO IMAGE -->
+<div class="article-hero-image-wrap">
+  <img src="Article_1_Image.png" alt="EUC Dependency Map and Risk Assessment documents on a desk alongside a laptop showing Excel data analysis — representing the structured deconstruction work Greywood Analytics delivers" class="article-hero-image">
+</div>
+
+<!-- ARTICLE BODY -->
+<div class="article-body">
+
+  <a href="/insights.html" class="back-link">← Back to Insights</a>
+
+  <!-- EXECUTIVE SUMMARY -->
+  <div class="exec-summary">
+    <div class="exec-summary-label">Executive Summary</div>
+    <p>Across Financial Services, a category of risk sits largely unquantified and largely unaddressed: the legacy spreadsheet. Built quickly, maintained informally, and inherited repeatedly as people move on, these assets have become load-bearing elements of critical processes — from regulatory reporting to risk calculation to Board dashboards.</p>
+    <p>The cost is not hypothetical. Industry research estimates that the top 50 financial institutions carry over $12 billion in EUC Value at Risk. Since May 2024, the PRA's SS1/23 has made governance of these assets a legal obligation — not a best practice. And yet most migration programmes still encounter them undocumented, unvalidated, and unready.</p>
+    <p>The ember has been smouldering for years. The question is whether your organisation addresses it before the heat becomes visible to someone else.</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>The asset nobody owns</h2>
+
+  <p>Every organisation in Financial Services has them. A spreadsheet built by an analyst who left three years ago. A SAS programme that runs every month on a scheduled job — reliable, unquestioned, and entirely undocumented. A reporting model that feeds the Board Risk Committee, whose logic exists nowhere except inside the file itself.</p>
+
+  <p>These are End User Computing assets — EUCs. And the defining characteristic of a mature EUC estate is not its complexity. It is its invisibility.</p>
+
+  <div class="pull-quote">
+    <p>"The problem lies not with the high-profile, high-risk models in well-governed treasury operations. It lies with the ones nobody has thought to look at."</p>
+  </div>
+
+  <p>EUCs were not built to be permanent. They were built to solve an immediate problem. They became permanent because they worked — and because the institutional knowledge required to replace them walked out of the door with the person who built them.</p>
+
+  <!-- STAT GRID -->
+  <div class="stat-grid">
+    <div class="stat-block">
+      <div class="stat-number">$12.1bn</div>
+      <div class="stat-label">EUC Value at Risk across the world's 50 largest financial institutions</div>
+      <div class="stat-source">Source: Chartis Research</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-number">57%</div>
+      <div class="stat-label">of capital markets firms have suffered compliance breaches due to EUC misuse</div>
+      <div class="stat-source">Source: Genesis Global / Risk.net</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-number">66%</div>
+      <div class="stat-label">of financial institutions admit EUCs pose a major operational risk</div>
+      <div class="stat-source">Source: Risk.net</div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <h2>Three risks that compound in silence</h2>
+
+  <p>The danger of an undocumented EUC is not that it will fail noisily. It is that it will fail quietly — producing outputs that appear correct, passing through review processes that cannot detect what they cannot see, and being carried forward into migration programmes as an unexamined assumption.</p>
+
+  <p><strong>Operational risk</strong> is the most visible. A copy-and-paste error in a value-at-risk spreadsheet contributed to a $6 billion trading loss in 2012. A formatting error in a contract spreadsheet forced a UK bank to buy $1.35 billion of worthless US contracts in 2008. These are not edge cases — they are the documented surface of a much larger and mostly undocumented problem.</p>
+
+  <p><strong>Migration risk</strong> is where the cost accumulates most quietly. When a transformation programme reaches a legacy EUC, the team faces a choice: migrate it without understanding it, or stop and document it first. The first option transfers the risk. The second option delays the programme — at full programme cost. Neither is acceptable. Both are avoidable.</p>
+
+  <p><strong>Regulatory risk</strong> is where the stakes have changed most significantly in the last twelve months.</p>
+
+  <!-- REGULATORY CALLOUT -->
+  <div class="reg-callout">
+    <div class="reg-callout-label">Regulatory Context — SS1/23</div>
+    <p>In May 2023, the Prudential Regulation Authority published Supervisory Statement SS1/23 — the most comprehensive model risk management framework issued by a major regulator to date. It came into legal force on 17 May 2024.</p>
+    <p>SS1/23 is unambiguous on the question of spreadsheets: EUC tools and offline spreadsheet calculations are explicitly within scope. The PRA has confirmed that these principles apply to all models wherever they are used in the bank — not just those used for regulatory capital calculations.</p>
+    <p>Firms that have not yet conducted a formal self-assessment of their EUC estate against SS1/23 are, as of May 2024, already behind the curve. The PRA has commenced supervisory engagement with the first cohort of firms.</p>
+  </div>
+
+  <p>The implication is direct. An undocumented spreadsheet feeding a regulatory return is not merely a governance weakness. It is a potential breach of a binding supervisory requirement. And when a regulator asks for the documented basis of a figure, "the spreadsheet calculates it" is not an answer that satisfies Principle 2 of SS1/23.</p>
+
+  <!-- SECTION 3 — HOW GA HELPS -->
+  <div class="ga-helps">
+    <div class="ga-helps-label">How Greywood Analytics Helps</div>
+    <h3>Making the invisible legible — before it becomes a liability.</h3>
+    <p>Greywood Analytics specialises in the systematic deconstruction of legacy EUC assets — Excel workbooks, SAS programmes, Access databases, flat files, and legacy reports — producing structured, audit-ready documentation that makes them legible, assessable, and safe to migrate.</p>
+    <p>For every asset in scope, we produce five deliverables across three stages:</p>
+    <ul class="deliverable-list">
+      <li><strong>Plain English Summary</strong> — what the asset does, who uses it, what it produces, and what the migration concerns are. Written for a project sponsor and a Risk Director simultaneously.</li>
+      <li><strong>Dependency Map</strong> — every data flow, formula chain, and cross-system dependency, with fragility ratings and change impact assessments.</li>
+      <li><strong>Dependency Mapping Narrative</strong> — the single points of failure, the silent failure modes, and the actions required before the asset is touched.</li>
+      <li><strong>Risk &amp; Assumption Narrative</strong> — every identified risk and governance gap, cited against SS1/23, IFRS 9, BCBS 239, and FCA Consumer Duty where applicable.</li>
+      <li><strong>Risk Register</strong> — a complete, filterable register with a prioritised remediation plan, structured for immediate use by Risk, Audit, and programme teams.</li>
+    </ul>
+    <p>Every finding is grounded in specific evidence from the file. Not pattern-matching. Not generic observations. Evidence — cited to a specific cell, formula, comment, or programme section.</p>
+    <p>First deliverable pack typically received within 2–3 working days of engagement start.</p>
+  </div>
+
+  <!-- CLOSING -->
+  <h2>The cost of waiting</h2>
+
+  <p>The organisations that manage EUC risk well are not the ones that had fewer legacy assets. They are the ones that decided to understand what they had before a migration forced the question, before an audit surfaced the gap, or before a regulator asked for documentation that did not exist.</p>
+
+  <p>The ember has been in most organisations for years. It does not announce itself. It simply waits for the conditions that turn it into something more significant — a migration deadline, a regulatory review, a key person departure, or a model output that nobody can explain.</p>
+
+  <p>The cost of addressing it now is a structured engagement and a clear deliverable pack. The cost of addressing it later is everything that happens between the ember and the inferno.</p>
+
+  <!-- CLOSING QUOTE -->
+  <div class="closing-quote">
+    <blockquote>"The most dangerous asset in a migration programme is not the one that is broken. It is the one that appears to work — and that nobody fully understands."</blockquote>
+    <cite>Greywood Analytics</cite>
+  </div>
+
+  <!-- CTA -->
+  <div class="article-cta">
+    <p>If this resonates with what you are seeing in your migration programme or regulatory reporting environment, we should talk. Every engagement begins with a no-commitment scoping conversation.</p>
+    <a href="mailto:yemi.michael@greywoodanalytics.com" class="btn-primary">Start a Conversation</a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Greywood Analytics · EUC Deconstruction for Financial Services · <a href="mailto:yemi.michael@greywoodanalytics.com">yemi.michael@greywoodanalytics.com</a> · <a href="/">greywoodanalytics.com</a></p>
+</footer>
+
+</body>
+</html>
