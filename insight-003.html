@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The SS1/23 Gap Most Banks Haven't Closed | Greywood Analytics</title>
+<meta name="description" content="SS1/23 came into legal force in May 2024. Most banks addressed their formal model inventory. Far fewer addressed the EUC estate sitting beneath it. This Executive Brief examines the gap that remains — and what it means for regulated firms.">
+<meta name="keywords" content="SS1/23 compliance, PRA model risk management, EUC governance, spreadsheet models, model risk, IFRS 9, regulatory compliance UK banks, model inventory">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:    #1A1F4E;
+    --gold:    #C9A84C;
+    --gold-lt: #E8D5A3;
+    --white:   #FFFFFF;
+    --off-wht: #F8F6F2;
+    --grey:    #6B7280;
+    --dark:    #1A1A2E;
+    --light-grey: #F1F0EE;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; color: var(--dark); background: var(--white); line-height: 1.7; }
+
+  nav { background: var(--navy); padding: 16px 48px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 100; }
+  .nav-brand { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 17px; color: var(--gold); letter-spacing: 2px; text-decoration: none; text-transform: uppercase; }
+  .nav-brand span { font-weight: 300; color: var(--gold-lt); font-style: italic; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { color: var(--gold-lt); text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+
+  .article-hero { background: var(--navy); padding: 72px 48px 56px; }
+  .article-hero-inner { max-width: 760px; margin: 0 auto; }
+  .article-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+  .article-tag { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--navy); background: var(--gold); padding: 4px 12px; border-radius: 2px; }
+  .article-number { font-size: 12px; color: #8899BB; letter-spacing: 1px; }
+  .article-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 52px); font-weight: 600; color: var(--white); line-height: 1.15; margin-bottom: 20px; }
+  .article-hero-divider { width: 48px; height: 2px; background: var(--gold); margin: 24px 0; }
+  .article-standfirst { font-size: 17px; color: var(--gold-lt); line-height: 1.65; font-weight: 300; }
+
+  .article-hero-image-wrap { overflow: hidden; border-bottom: 3px solid var(--gold); }
+  .article-hero-image { width: 100%; max-height: 480px; object-fit: cover; object-position: center 40%; display: block; }
+
+  .article-body { max-width: 760px; margin: 0 auto; padding: 64px 48px 80px; }
+
+  .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--gold); text-decoration: none; letter-spacing: 1px; text-transform: uppercase; font-weight: 500; margin-bottom: 40px; transition: gap 0.2s; }
+  .back-link:hover { gap: 12px; }
+
+  .exec-summary { background: var(--off-wht); border: 1px solid #E0DDD8; border-left: 5px solid var(--navy); padding: 32px 36px; margin-bottom: 56px; border-radius: 0 2px 2px 0; }
+  .exec-summary-label { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--navy); margin-bottom: 16px; }
+  .exec-summary p { font-size: 15px; color: #2A2A3E; line-height: 1.75; margin-bottom: 14px; }
+  .exec-summary p:last-child { margin-bottom: 0; font-style: italic; color: var(--navy); font-weight: 500; }
+
+  .article-body h2 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: var(--navy); margin-bottom: 20px; margin-top: 52px; line-height: 1.2; }
+  .article-body p { font-size: 16px; color: #2A2A3E; line-height: 1.8; margin-bottom: 24px; }
+
+  .pull-quote { border-left: 3px solid var(--gold); padding: 8px 0 8px 28px; margin: 40px 0; }
+  .pull-quote p { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: var(--navy); line-height: 1.45; margin: 0; font-weight: 400; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 40px 0; }
+  .stat-block { background: var(--light-grey); padding: 28px 24px; border-top: 3px solid var(--gold); text-align: center; }
+  .stat-number { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 600; color: var(--navy); line-height: 1; margin-bottom: 8px; }
+  .stat-label { font-size: 12px; color: var(--grey); line-height: 1.4; font-weight: 500; }
+  .stat-source { font-size: 10px; color: #AAAAAA; margin-top: 8px; font-style: italic; }
+
+  /* Five principles breakdown */
+  .principles-grid { margin: 40px 0; }
+  .principle-item { display: grid; grid-template-columns: 200px 1fr; gap: 0; margin-bottom: 3px; }
+  .principle-label { background: var(--navy); padding: 20px 24px; display: flex; align-items: center; }
+  .principle-label span { font-size: 13px; font-weight: 600; color: var(--gold); line-height: 1.3; }
+  .principle-body { background: var(--light-grey); padding: 20px 24px; }
+  .principle-body p { font-size: 14px; color: #2A2A3E; line-height: 1.6; margin: 0; }
+  .principle-body .euc-flag { font-size: 11px; font-weight: 600; color: #C00000; margin-top: 8px; letter-spacing: 0.5px; }
+
+  .reg-callout { background: var(--off-wht); border: 1px solid #E0DDD8; border-left: 4px solid var(--navy); padding: 28px 32px; margin: 40px 0; border-radius: 0 2px 2px 0; }
+  .reg-callout-label { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--navy); margin-bottom: 12px; }
+  .reg-callout p { font-size: 14.5px; color: #2A2A3E; margin-bottom: 8px; line-height: 1.65; }
+  .reg-callout p:last-child { margin-bottom: 0; }
+
+  .warning-box { background: #FFF8E1; border: 1px solid #F0D060; border-left: 4px solid #C9A84C; padding: 28px 32px; margin: 40px 0; }
+  .warning-label { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #833C00; margin-bottom: 12px; }
+  .warning-box p { font-size: 14.5px; color: #2A2A3E; margin-bottom: 8px; line-height: 1.65; }
+  .warning-box p:last-child { margin-bottom: 0; }
+
+  .ga-helps { background: var(--navy); padding: 40px 36px; margin: 48px 0; border-radius: 2px; }
+  .ga-helps-label { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .ga-helps h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; color: var(--white); margin-bottom: 20px; line-height: 1.3; }
+  .ga-helps p { font-size: 15px; color: var(--gold-lt); line-height: 1.7; margin-bottom: 16px; }
+  .ga-helps p:last-child { margin-bottom: 0; }
+  .deliverable-list { list-style: none; margin: 20px 0; }
+  .deliverable-list li { font-size: 14.5px; color: var(--gold-lt); padding: 8px 0; padding-left: 20px; position: relative; border-bottom: 1px solid rgba(201,168,76,0.15); line-height: 1.5; }
+  .deliverable-list li:last-child { border-bottom: none; }
+  .deliverable-list li::before { content: "→"; position: absolute; left: 0; color: var(--gold); font-size: 13px; }
+
+  .closing-quote { text-align: center; padding: 48px 0 0; border-top: 1px solid #E0DDD8; margin-top: 56px; }
+  .closing-quote blockquote { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-style: italic; color: var(--navy); line-height: 1.45; margin-bottom: 16px; font-weight: 400; }
+  .closing-quote cite { font-size: 12px; color: var(--grey); font-style: normal; letter-spacing: 1px; text-transform: uppercase; }
+
+  .article-cta { background: var(--off-wht); border: 1px solid #E0DDD8; padding: 36px; margin-top: 56px; text-align: center; border-radius: 2px; }
+  .article-cta p { font-size: 15px; color: var(--grey); margin-bottom: 20px; }
+  .btn-primary { display: inline-block; background: var(--gold); color: var(--navy); font-family: 'Inter', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 14px 32px; text-decoration: none; border-radius: 2px; transition: background 0.2s; }
+  .btn-primary:hover { background: var(--gold-lt); }
+
+  footer { background: #11153A; padding: 24px 48px; text-align: center; border-top: 1px solid rgba(201,168,76,0.2); }
+  footer p { font-size: 12px; color: #6677AA; }
+  footer a { color: #6677AA; text-decoration: none; }
+
+  @media (max-width: 640px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .article-hero { padding: 48px 20px 40px; }
+    .article-body { padding: 40px 20px 60px; }
+    .exec-summary { padding: 24px 20px; }
+    .ga-helps { padding: 28px 20px; }
+    .principle-item { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">GREYWOOD <span>Analytics</span></a>
+  <ul class="nav-links">
+    <li><a href="/#solution">What We Do</a></li>
+    <li><a href="/#deliverables">Deliverables</a></li>
+    <li><a href="/#why">Why Us</a></li>
+    <li><a href="/insights.html">Insights</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <div class="article-meta">
+      <span class="article-tag">Regulatory Reporting</span>
+      <span class="article-number">Executive Brief 003</span>
+    </div>
+    <h1>The SS1/23 Gap Most Banks Haven't Closed</h1>
+    <div class="article-hero-divider"></div>
+    <p class="article-standfirst">SS1/23 came into legal force in May 2024. Most banks addressed their formal model inventory. Far fewer addressed the EUC estate sitting beneath it — the spreadsheets, SAS programmes, and offline calculations that SS1/23 explicitly brings into scope. That gap is still open.</p>
+  </div>
+</div>
+
+<!-- IMAGE -->
+<div class="article-hero-image-wrap">
+  <img src="Article_3_Image.png" alt="PRA SS1/23 compliance document on desk alongside an unchecked EUC assessment checklist, representing the model risk governance gap in UK banks" class="article-hero-image">
+</div>
+
+<!-- BODY -->
+<div class="article-body">
+
+  <a href="/insights.html" class="back-link">← Back to Insights</a>
+
+  <!-- EXEC SUMMARY -->
+  <div class="exec-summary">
+    <div class="exec-summary-label">Executive Summary</div>
+    <p>The PRA's Supervisory Statement SS1/23 — the most significant model risk management framework issued by a UK regulator since the financial crisis — came into legal force on 17 May 2024. Its five principles apply to all material models used by regulated UK banks, building societies, and PRA-designated investment firms. They explicitly include End User Computing tools: spreadsheets, SAS programmes, and offline calculations that sit outside formal model inventory systems.</p>
+    <p>Most compliance programmes focused on the visible model estate — the IFRS 9 models, the IRB capital models, the stress testing frameworks. These were already inventoried, already partially governed. The EUC estate beneath them was a different matter: largely undocumented, informally maintained, and absent from most model risk governance frameworks entirely.</p>
+    <p>More than a year after the legal deadline, that gap remains the most common SS1/23 compliance deficiency identified in supervisory engagement. It is also the most addressable — if the organisation knows where to start.</p>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>What SS1/23 actually requires</h2>
+
+  <p>SS1/23 sets out five principles for model risk management. They are overarching in scope — the PRA was deliberate about this. The statement applies to all types of models used to inform business decisions, whether developed in-house or externally, regardless of technology, and including models used for financial reporting purposes.</p>
+
+  <p>The explicit inclusion of EUC tools was not accidental. The PRA observed, during its supervisory work in the years preceding SS1/23, that some of the most material model risk in regulated firms was sitting in assets that had never been formally identified as models at all — spreadsheets built by business analysts, SAS programmes maintained by a single person, Access databases feeding regulatory returns with no documentation and no governance trail.</p>
+
+  <div class="principles-grid">
+    <div class="principle-item">
+      <div class="principle-label"><span>Principle 1<br>Model Identification & Classification</span></div>
+      <div class="principle-body">
+        <p>Firms must identify all models in use — including EUC tools — and classify them by materiality and risk. Most EUC assets have never been inventoried at all.</p>
+        <p class="euc-flag">⚠ Common EUC gap: absent from model inventory</p>
+      </div>
+    </div>
+    <div class="principle-item">
+      <div class="principle-label"><span>Principle 2<br>Governance & Policies</span></div>
+      <div class="principle-body">
+        <p>Clear ownership, documented methodology, and Board-level oversight of model risk. EUC assets typically have informal ownership at best — often reverting to whoever maintains the file.</p>
+        <p class="euc-flag">⚠ Common EUC gap: no formal owner, no documented methodology</p>
+      </div>
+    </div>
+    <div class="principle-item">
+      <div class="principle-label"><span>Principle 3<br>Model Development & Implementation</span></div>
+      <div class="principle-body">
+        <p>Models must be developed with documented rationale, tested, and formally approved before use. Most EUC tools were built to solve an immediate problem — documentation came later, if at all.</p>
+        <p class="euc-flag">⚠ Common EUC gap: no development documentation or approval record</p>
+      </div>
+    </div>
+    <div class="principle-item">
+      <div class="principle-label"><span>Principle 4<br>Model Validation</span></div>
+      <div class="principle-body">
+        <p>Independent validation of model methodology, assumptions, and outputs. The PRA expects this to be performed by a function independent of model development. For EUC tools, independent validation has almost never been performed.</p>
+        <p class="euc-flag">⚠ Common EUC gap: never independently validated</p>
+      </div>
+    </div>
+    <div class="principle-item">
+      <div class="principle-label"><span>Principle 5<br>Model Risk Reporting</span></div>
+      <div class="principle-body">
+        <p>Aggregate model risk must be reported to the Board Risk Committee at least annually. An EUC estate that has never been inventoried cannot be reported. The Board cannot oversee risk it does not know exists.</p>
+        <p class="euc-flag">⚠ Common EUC gap: not reflected in Board risk reporting</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    <p>"The PRA did not write EUC tools into SS1/23 as an afterthought. It wrote them in because supervisory experience showed they were where the real risk was hiding."</p>
+  </div>
+
+  <!-- SECTION 2 -->
+  <h2>The compliance programme that stopped too soon</h2>
+
+  <p>When SS1/23 was published in May 2023 and firms had twelve months to prepare, most compliance programmes followed a logical prioritisation: address the formal model inventory first, then work outward. The IRB capital models, the IFRS 9 impairment models, the stress testing frameworks — these were the assets already known, already partially governed, and carrying the highest regulatory visibility.</p>
+
+  <p>The EUC estate was different. It was not on the model inventory because it had never been inventoried. It was not in the governance framework because nobody had formally decided it needed to be. And by the time the May 2024 deadline arrived, many firms had completed their visible compliance programme while the EUC layer beneath it remained untouched.</p>
+
+  <div class="stat-grid">
+    <div class="stat-block">
+      <div class="stat-number">5</div>
+      <div class="stat-label">SS1/23 principles — all five explicitly apply to EUC tools and offline spreadsheet calculations</div>
+      <div class="stat-source">Source: PRA SS1/23, Bank of England</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-number">May 2024</div>
+      <div class="stat-label">Legal deadline passed — PRA supervisory engagement with first cohort of firms already underway</div>
+      <div class="stat-source">Source: PRA</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-number">s.166</div>
+      <div class="stat-label">Skilled person review — the PRA's enforcement mechanism for firms falling short of SS1/23 expectations</div>
+      <div class="stat-source">Source: Deloitte / PRA</div>
+    </div>
+  </div>
+
+  <div class="warning-box">
+    <div class="warning-label">Supervisory Risk — Section 166 Review</div>
+    <p>Deloitte's pre-implementation analysis noted that the PRA will expect firms within scope to demonstrate a high level of compliance from day one — and that the probability of the PRA commissioning a skilled person report (s.166 review) for banks falling short of SS1/23 expectations is high.</p>
+    <p>A s.166 review is not a voluntary exercise. It is conducted by an external reviewer appointed by and reporting to the PRA, at the firm's expense. The findings go directly to the regulator. For firms with material EUC assets feeding regulatory outputs that have never been through a governance framework, this is a live and foreseeable risk — not a theoretical one.</p>
+  </div>
+
+  <!-- SECTION 3 -->
+  <h2>What closing the gap requires</h2>
+
+  <p>Closing the SS1/23 EUC gap is not a single action. It is a structured programme of work that begins with knowing what you have and ends with being able to demonstrate, to a regulator, that every material EUC asset has been identified, documented, owned, and assessed.</p>
+
+  <p>The starting point is always the same: a systematic inventory and deconstruction of the EUC estate. Not a spreadsheet list of file names — a documented understanding of what each asset does, what data it uses, what logic it applies, what outputs it produces, and what governance it currently has or lacks.</p>
+
+  <div class="reg-callout">
+    <div class="reg-callout-label">What "Documented" Means to the PRA</div>
+    <p>SS1/23 Principle 2 requires that model methodology is documented to a standard that enables an independent reviewer to understand and reproduce the model without requiring assistance from the model developer. For most EUC assets, this standard has never been met — the documentation, where it exists at all, is limited to cell comments and an incomplete change log.</p>
+    <p>Principle 4 requires that validation is performed by a function independent of model development. For EUC tools built and maintained by business teams, this means the validation cannot be performed by the same team — or even the same business unit. External review by a specialist with model risk governance experience is what the PRA expects.</p>
+  </div>
+
+  <div class="ga-helps">
+    <div class="ga-helps-label">How Greywood Analytics Helps</div>
+    <h3>Structured deconstruction that closes the SS1/23 EUC gap.</h3>
+    <p>A Greywood Analytics engagement is specifically designed to produce the documentation that SS1/23 requires — and to position each asset for the governance steps that follow. For every EUC asset in scope, we deliver:</p>
+    <ul class="deliverable-list">
+      <li><strong>Plain English Summary</strong> — what the asset does, what it produces, who owns it, and what the key governance gaps are. Directly addresses SS1/23 Principles 1 and 2.</li>
+      <li><strong>Dependency Map</strong> — every data flow, formula chain, and cross-system dependency mapped and rated for fragility. Essential for SS1/23 Principle 3 documentation requirements.</li>
+      <li><strong>Risk & Assumption Narrative</strong> — every identified risk and governance gap cited against SS1/23 by principle number. Structured for immediate use by model risk and compliance teams.</li>
+      <li><strong>Risk Register</strong> — complete register with prioritised remediation plan, giving model risk teams a clear path from current state to SS1/23 compliance. Addresses Principles 1, 2, 4, and 5.</li>
+      <li><strong>Rating Calibration Statement</strong> — for assets feeding regulatory returns, a methodology defence document explaining every risk score to any reviewer — including a PRA skilled person.</li>
+    </ul>
+    <p>Our deconstruction constitutes the independent review that SS1/23 Principle 4 requires — conducted by a specialist with Financial Services model risk experience, outside the business unit, with full documented evidence of findings.</p>
+    <p>First deliverable pack typically received within 2–3 working days of engagement start.</p>
+  </div>
+
+  <!-- CLOSING -->
+  <h2>The gap is still closeable</h2>
+
+  <p>The May 2024 deadline has passed. But SS1/23 compliance is not a binary state — it is an ongoing supervisory expectation. Firms that can demonstrate a credible, evidence-based programme of EUC governance remediation are in a materially better position than firms that cannot, regardless of where that programme started.</p>
+
+  <p>The PRA's supervisory engagement is ongoing. The s.166 risk is real. And the EUC assets that have never been through a governance framework — the ones built by analysts who have since left, running on scheduled jobs nobody fully understands, feeding outputs that go to the Board and the regulator — are still there.</p>
+
+  <p>The gap is still closeable. The question is whether your organisation closes it proactively, or waits for a supervisory conversation that forces the issue on someone else's timeline.</p>
+
+  <div class="closing-quote">
+    <blockquote>"SS1/23 did not create the EUC risk. It created the obligation to address it — and a deadline that has already passed."</blockquote>
+    <cite>Greywood Analytics</cite>
+  </div>
+
+  <div class="article-cta">
+    <p>If your organisation has material EUC assets that have not yet been assessed against SS1/23, we can help you understand the gap and close it — starting with a no-commitment scoping conversation.</p>
+    <a href="mailto:yemi.michael@greywoodanalytics.com" class="btn-primary">Start a Conversation</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2025 Greywood Analytics · EUC Deconstruction for Financial Services · <a href="mailto:yemi.michael@greywoodanalytics.com">yemi.michael@greywoodanalytics.com</a> · <a href="/">greywoodanalytics.com</a></p>
+</footer>
+
+</body>
+</html>

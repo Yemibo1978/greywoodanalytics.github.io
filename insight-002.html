@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Your Auditors Will Find — Before They Find It | Greywood Analytics</title>
+<meta name="description" content="Internal audit teams are increasingly finding EUC governance gaps in Financial Services firms. This Executive Brief identifies the eight questions auditors ask — and the answers most organisations cannot give.">
+<meta name="keywords" content="internal audit EUC, spreadsheet audit, model governance, SS1/23, EUC compliance, financial services audit, spreadsheet risk, data governance audit">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:    #1A1F4E;
+    --gold:    #C9A84C;
+    --gold-lt: #E8D5A3;
+    --white:   #FFFFFF;
+    --off-wht: #F8F6F2;
+    --grey:    #6B7280;
+    --dark:    #1A1A2E;
+    --light-grey: #F1F0EE;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; color: var(--dark); background: var(--white); line-height: 1.7; }
+
+  nav {
+    background: var(--navy); padding: 16px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 100;
+  }
+  .nav-brand { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 17px; color: var(--gold); letter-spacing: 2px; text-decoration: none; text-transform: uppercase; }
+  .nav-brand span { font-weight: 300; color: var(--gold-lt); font-style: italic; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { color: var(--gold-lt); text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+
+  .article-hero { background: var(--navy); padding: 72px 48px 56px; }
+  .article-hero-inner { max-width: 760px; margin: 0 auto; }
+  .article-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+  .article-tag { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--navy); background: var(--gold); padding: 4px 12px; border-radius: 2px; }
+  .article-number { font-size: 12px; color: #8899BB; letter-spacing: 1px; }
+  .article-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 52px); font-weight: 600; color: var(--white); line-height: 1.15; margin-bottom: 20px; }
+  .article-hero-divider { width: 48px; height: 2px; background: var(--gold); margin: 24px 0; }
+  .article-standfirst { font-size: 17px; color: var(--gold-lt); line-height: 1.65; font-weight: 300; }
+
+  .article-hero-image-wrap { overflow: hidden; border-bottom: 3px solid var(--gold); }
+  .article-hero-image { width: 100%; max-height: 480px; object-fit: cover; object-position: center 40%; display: block; }
+
+  .article-body { max-width: 760px; margin: 0 auto; padding: 64px 48px 80px; }
+
+  .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--gold); text-decoration: none; letter-spacing: 1px; text-transform: uppercase; font-weight: 500; margin-bottom: 40px; transition: gap 0.2s; }
+  .back-link:hover { gap: 12px; }
+
+  .exec-summary { background: var(--off-wht); border: 1px solid #E0DDD8; border-left: 5px solid var(--navy); padding: 32px 36px; margin-bottom: 56px; border-radius: 0 2px 2px 0; }
+  .exec-summary-label { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--navy); margin-bottom: 16px; }
+  .exec-summary p { font-size: 15px; color: #2A2A3E; line-height: 1.75; margin-bottom: 14px; }
+  .exec-summary p:last-child { margin-bottom: 0; font-style: italic; color: var(--navy); font-weight: 500; }
+
+  .article-body h2 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: var(--navy); margin-bottom: 20px; margin-top: 52px; line-height: 1.2; }
+  .article-body p { font-size: 16px; color: #2A2A3E; line-height: 1.8; margin-bottom: 24px; }
+
+  .pull-quote { border-left: 3px solid var(--gold); padding: 8px 0 8px 28px; margin: 40px 0; }
+  .pull-quote p { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: var(--navy); line-height: 1.45; margin: 0; font-weight: 400; }
+
+  /* Eight questions list */
+  .audit-questions { background: var(--navy); padding: 36px 40px; margin: 40px 0; border-radius: 2px; }
+  .audit-questions-label { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .audit-question { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(201,168,76,0.15); align-items: flex-start; }
+  .audit-question:last-child { border-bottom: none; }
+  .audit-q-num { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--gold); min-width: 32px; line-height: 1.3; }
+  .audit-q-text { font-size: 15px; color: var(--gold-lt); line-height: 1.6; }
+  .audit-q-text strong { color: var(--white); display: block; margin-bottom: 4px; font-size: 14px; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 40px 0; }
+  .stat-block { background: var(--light-grey); padding: 28px 24px; border-top: 3px solid var(--gold); text-align: center; }
+  .stat-number { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 600; color: var(--navy); line-height: 1; margin-bottom: 8px; }
+  .stat-label { font-size: 12px; color: var(--grey); line-height: 1.4; font-weight: 500; }
+  .stat-source { font-size: 10px; color: #AAAAAA; margin-top: 8px; font-style: italic; }
+
+  .reg-callout { background: var(--off-wht); border: 1px solid #E0DDD8; border-left: 4px solid var(--navy); padding: 28px 32px; margin: 40px 0; border-radius: 0 2px 2px 0; }
+  .reg-callout-label { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--navy); margin-bottom: 12px; }
+  .reg-callout p { font-size: 14.5px; color: #2A2A3E; margin-bottom: 8px; line-height: 1.65; }
+  .reg-callout p:last-child { margin-bottom: 0; }
+
+  .ga-helps { background: var(--navy); padding: 40px 36px; margin: 48px 0; border-radius: 2px; }
+  .ga-helps-label { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .ga-helps h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; color: var(--white); margin-bottom: 20px; line-height: 1.3; }
+  .ga-helps p { font-size: 15px; color: var(--gold-lt); line-height: 1.7; margin-bottom: 16px; }
+  .ga-helps p:last-child { margin-bottom: 0; }
+  .deliverable-list { list-style: none; margin: 20px 0; }
+  .deliverable-list li { font-size: 14.5px; color: var(--gold-lt); padding: 8px 0; padding-left: 20px; position: relative; border-bottom: 1px solid rgba(201,168,76,0.15); line-height: 1.5; }
+  .deliverable-list li:last-child { border-bottom: none; }
+  .deliverable-list li::before { content: "→"; position: absolute; left: 0; color: var(--gold); font-size: 13px; }
+
+  .closing-quote { text-align: center; padding: 48px 0 0; border-top: 1px solid #E0DDD8; margin-top: 56px; }
+  .closing-quote blockquote { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-style: italic; color: var(--navy); line-height: 1.45; margin-bottom: 16px; font-weight: 400; }
+  .closing-quote cite { font-size: 12px; color: var(--grey); font-style: normal; letter-spacing: 1px; text-transform: uppercase; }
+
+  .article-cta { background: var(--off-wht); border: 1px solid #E0DDD8; padding: 36px; margin-top: 56px; text-align: center; border-radius: 2px; }
+  .article-cta p { font-size: 15px; color: var(--grey); margin-bottom: 20px; }
+  .btn-primary { display: inline-block; background: var(--gold); color: var(--navy); font-family: 'Inter', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 14px 32px; text-decoration: none; border-radius: 2px; transition: background 0.2s; }
+  .btn-primary:hover { background: var(--gold-lt); }
+
+  footer { background: #11153A; padding: 24px 48px; text-align: center; border-top: 1px solid rgba(201,168,76,0.2); }
+  footer p { font-size: 12px; color: #6677AA; }
+  footer a { color: #6677AA; text-decoration: none; }
+
+  @media (max-width: 640px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .article-hero { padding: 48px 20px 40px; }
+    .article-body { padding: 40px 20px 60px; }
+    .exec-summary { padding: 24px 20px; }
+    .ga-helps { padding: 28px 20px; }
+    .audit-questions { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">GREYWOOD <span>Analytics</span></a>
+  <ul class="nav-links">
+    <li><a href="/#solution">What We Do</a></li>
+    <li><a href="/#deliverables">Deliverables</a></li>
+    <li><a href="/#why">Why Us</a></li>
+    <li><a href="/insights.html">Insights</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <div class="article-meta">
+      <span class="article-tag">Internal Audit</span>
+      <span class="article-number">Executive Brief 002</span>
+    </div>
+    <h1>What Your Auditors Will Find — Before They Find It</h1>
+    <div class="article-hero-divider"></div>
+    <p class="article-standfirst">Internal audit teams are finding EUC governance gaps with increasing frequency and increasing confidence. This Executive Brief identifies the eight questions they ask — and the answers most Financial Services organisations cannot currently give.</p>
+  </div>
+</div>
+
+<div class="article-hero-image-wrap">
+  <img src="Article_2_Image.png" alt="Audit meeting with EUC assessment documents, risk registers and governance findings spread across a boardroom table" class="article-hero-image">
+</div>
+
+<div class="article-body">
+
+  <a href="/insights.html" class="back-link">← Back to Insights</a>
+
+  <div class="exec-summary">
+    <div class="exec-summary-label">Executive Summary</div>
+    <p>Internal audit functions in Financial Services have sharpened their focus on End User Computing assets considerably since the PRA's SS1/23 came into legal force in May 2024. Spreadsheets, SAS programmes, and Access databases that feed material business processes are no longer invisible to audit — they are actively sought out.</p>
+    <p>The findings, when they come, are consistent: undocumented assets, absent ownership trails, unvalidated assumptions, and governance gaps that no single person in the organisation can fully explain. These are not new problems. They are long-standing problems that regulatory pressure has made newly urgent.</p>
+    <p>The question is not whether your auditors will find them. It is whether you find them first.</p>
+  </div>
+
+  <h2>The audit lens has shifted</h2>
+
+  <p>For much of the last decade, internal audit coverage of EUC assets in Financial Services was inconsistent. Some firms had EUC registers. Most had gaps in those registers. And the practical reality — that critical processes were running on spreadsheets built by people who had long since left — was privately acknowledged and collectively ignored.</p>
+
+  <p>That has changed. The combination of SS1/23, increasing FCA scrutiny of operational risk, and the volume of active data migration programmes has put EUC governance firmly on the internal audit agenda. Audit teams are not stumbling across spreadsheet risk as a side finding — they are looking for it deliberately, with specific frameworks and escalation paths in place.</p>
+
+  <div class="pull-quote">
+    <p>"The spreadsheet that nobody owns is exactly the kind of asset that generates a high-priority audit finding — not because it is broken, but because nobody can prove it is working correctly."</p>
+  </div>
+
+  <p>Regulators have been explicit about what good looks like. <span style="font-weight:600; color: var(--navy);">SS1/23 Principle 2</span> requires that models — including EUC tools — have documented ownership, clear methodology, and evidence of independent review. Most EUC estates in active Financial Services organisations meet none of these requirements for a significant proportion of their assets.</p>
+
+  <div class="stat-grid">
+    <div class="stat-block">
+      <div class="stat-number">57%</div>
+      <div class="stat-label">of capital markets firms have suffered compliance breaches linked to EUC misuse</div>
+      <div class="stat-source">Source: Genesis Global / Risk.net</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-number">66%</div>
+      <div class="stat-label">of financial institutions acknowledge EUCs represent a major operational risk</div>
+      <div class="stat-source">Source: Risk.net</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-number">May 2024</div>
+      <div class="stat-label">SS1/23 came into legal force — EUC governance is now a binding PRA obligation</div>
+      <div class="stat-source">Source: PRA</div>
+    </div>
+  </div>
+
+  <h2>The eight questions your auditors will ask</h2>
+
+  <p>When an internal audit team reviews a legacy EUC asset, they work through a consistent set of questions. These questions are not difficult to anticipate — they are the same questions that any competent governance framework would ask. What is difficult, for most organisations, is answering them.</p>
+
+  <div class="audit-questions">
+    <div class="audit-questions-label">The Eight Questions</div>
+
+    <div class="audit-question">
+      <div class="audit-q-num">01</div>
+      <div class="audit-q-text">
+        <strong>Who owns this asset?</strong>
+        Not who uses it — who is accountable for its accuracy, its governance, and its outputs. In most organisations, the honest answer is that ownership transferred informally when the original author left, and has never been formally assigned since.
+      </div>
+    </div>
+
+    <div class="audit-question">
+      <div class="audit-q-num">02</div>
+      <div class="audit-q-text">
+        <strong>Where are the controls?</strong>
+        What prevents an error in this asset from propagating into a regulatory return, a Board report, or a risk dashboard without being detected? For most EUCs, the answer is: manual review, if anyone remembers to do it.
+      </div>
+    </div>
+
+    <div class="audit-question">
+      <div class="audit-q-num">03</div>
+      <div class="audit-q-text">
+        <strong>What assumptions drive the output?</strong>
+        Every model contains assumptions. Are they documented? Are they validated? Are they still appropriate given changes in the business environment since the asset was built?
+      </div>
+    </div>
+
+    <div class="audit-question">
+      <div class="audit-q-num">04</div>
+      <div class="audit-q-text">
+        <strong>Is there documentation?</strong>
+        Not comments inside the file — a standalone methodology document that an independent reviewer could use to understand and replicate the logic without asking anyone.
+      </div>
+    </div>
+
+    <div class="audit-question">
+      <div class="audit-q-num">05</div>
+      <div class="audit-q-text">
+        <strong>Has it changed? When? Who approved it?</strong>
+        A change log is the minimum. An approved change log — with methodology impact assessments and sign-off from a qualified reviewer — is what SS1/23 expects.
+      </div>
+    </div>
+
+    <div class="audit-question">
+      <div class="audit-q-num">06</div>
+      <div class="audit-q-text">
+        <strong>What does it connect to?</strong>
+        What feeds into this asset, and what does this asset feed into? If the asset fails or produces an incorrect output, what downstream processes are affected — and would anyone know?
+      </div>
+    </div>
+
+    <div class="audit-question">
+      <div class="audit-q-num">07</div>
+      <div class="audit-q-text">
+        <strong>What breaks if it fails?</strong>
+        Single points of failure are an operational resilience concern as much as a governance one. An asset with one owner, no backup, and no documented logic is a single point of failure by definition.
+      </div>
+    </div>
+
+    <div class="audit-question">
+      <div class="audit-q-num">08</div>
+      <div class="audit-q-text">
+        <strong>Has it ever been independently reviewed?</strong>
+        Independent validation — not a second pair of eyes from the same team, but genuine independent assessment of the methodology and outputs — is an SS1/23 requirement for material models. For most EUCs, the answer is never.
+      </div>
+    </div>
+  </div>
+
+  <p>The value of knowing these questions in advance is not to prepare a defensive answer for each one. It is to understand where the genuine gaps are — and address them before they become audit findings that require escalation to the Board Risk Committee or, in the worst case, to the regulator.</p>
+
+  <div class="reg-callout">
+    <div class="reg-callout-label">Regulatory Context — Global Internal Audit Standards 2025</div>
+    <p>Updated Global Internal Audit Standards came into effect in January 2025, explicitly redefining the purpose of internal auditing to include providing "foresight" — not just assurance on what has already happened. This means audit functions are increasingly expected to identify emerging risks, not just document existing ones.</p>
+    <p>For EUC governance, this shift is material. An audit team operating under the 2025 standards is not just asking whether your spreadsheets are currently causing problems — it is asking whether they represent a foreseeable risk to the organisation's ability to meet its regulatory obligations. An undocumented EUC feeding a PRA return is precisely that kind of foreseeable risk.</p>
+  </div>
+
+  <div class="ga-helps">
+    <div class="ga-helps-label">How Greywood Analytics Helps</div>
+    <h3>Answering the eight questions — before your auditors ask them.</h3>
+    <p>A Greywood Analytics deconstruction engagement produces documentation that directly addresses every one of the eight questions above. For each asset in scope, we deliver:</p>
+    <ul class="deliverable-list">
+      <li><strong>Plain English Summary</strong> — documents what the asset does, who uses it, what it produces, and the key governance concerns. Answers questions 1, 3, and 4.</li>
+      <li><strong>Dependency Map</strong> — maps every data flow, formula chain, and cross-system connection with fragility ratings. Answers questions 6 and 7.</li>
+      <li><strong>Dependency Mapping Narrative</strong> — identifies single points of failure and silent failure modes. Answers question 7.</li>
+      <li><strong>Risk & Assumption Narrative</strong> — documents every identified risk, undocumented assumption, and governance gap with regulatory citations. Answers questions 3, 5, and 8.</li>
+      <li><strong>Risk Register</strong> — complete, filterable register with prioritised remediation plan structured for immediate use by audit and risk teams. Answers question 2.</li>
+    </ul>
+    <p>Every finding is cited to a specific cell, formula, comment, or programme section — not a generic observation but evidence that stands up to audit scrutiny.</p>
+    <p>First deliverable pack typically received within 2–3 working days of engagement start.</p>
+  </div>
+
+  <h2>The cost of waiting for the finding</h2>
+
+  <p>An internal audit finding on EUC governance is not simply an observation for the action log. At many Financial Services firms it triggers mandatory escalation — to the Chief Risk Officer, to the Audit Committee, and in some cases to the regulator directly under SS1/23's requirement to notify the PRA of material model risk management failures.</p>
+
+  <p>The remediation that follows an audit finding is also significantly more expensive than proactive documentation. It is conducted under time pressure, with audit scrutiny at every stage, and with the reputational cost of having been found rather than having acted.</p>
+
+  <p>The eight questions above are not a mystery. Every internal audit team in Financial Services is asking them. The only variable is whether your organisation answers them on its own terms — or on the auditor's.</p>
+
+  <div class="closing-quote">
+    <blockquote>"The best time to prepare for an audit finding is before the auditors arrive. The second best time is today."</blockquote>
+    <cite>Greywood Analytics</cite>
+  </div>
+
+  <div class="article-cta">
+    <p>If any of the eight questions above cannot be answered for your most critical legacy assets, we should have a conversation. Every engagement begins with a no-commitment scoping discussion.</p>
+    <a href="mailto:yemi.michael@greywoodanalytics.com" class="btn-primary">Start a Conversation</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2025 Greywood Analytics · EUC Deconstruction for Financial Services · <a href="mailto:yemi.michael@greywoodanalytics.com">yemi.michael@greywoodanalytics.com</a> · <a href="/">greywoodanalytics.com</a></p>
+</footer>
+
+</body>
+</html>
