@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" href="/favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Data Lineage Gap BCBS 239 Was Supposed to Close | Greywood Analytics</title>
+<meta name="description" content="More than a decade after BCBS 239, most banks still cannot trace a number in a risk report back to its source. This Executive Brief identifies where the lineage chain actually breaks — and why it is usually a spreadsheet.">
+<meta name="keywords" content="BCBS 239, data lineage, risk data aggregation, RDARR, EUC governance, financial services data governance, spreadsheet risk, model risk">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:    #1A1F4E;
+    --gold:    #C9A84C;
+    --gold-lt: #E8D5A3;
+    --white:   #FFFFFF;
+    --off-wht: #F8F6F2;
+    --grey:    #6B7280;
+    --dark:    #1A1A2E;
+    --light-grey: #F1F0EE;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; color: var(--dark); background: var(--white); line-height: 1.7; }
+
+  nav {
+    background: var(--navy); padding: 16px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 100;
+  }
+  .nav-brand { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 17px; color: var(--gold); letter-spacing: 2px; text-decoration: none; text-transform: uppercase; }
+  .nav-brand span { font-weight: 300; color: var(--gold-lt); font-style: italic; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { color: var(--gold-lt); text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+
+  .article-hero { background: var(--navy); padding: 72px 48px 56px; }
+  .article-hero-inner { max-width: 760px; margin: 0 auto; }
+  .article-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+  .article-tag { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--navy); background: var(--gold); padding: 4px 12px; border-radius: 2px; }
+  .article-number { font-size: 12px; color: #8899BB; letter-spacing: 1px; }
+  .article-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 52px); font-weight: 600; color: var(--white); line-height: 1.15; margin-bottom: 20px; }
+  .article-hero-divider { width: 48px; height: 2px; background: var(--gold); margin: 24px 0; }
+  .article-standfirst { font-size: 17px; color: var(--gold-lt); line-height: 1.65; font-weight: 300; }
+
+  .article-hero-image-wrap { overflow: hidden; border-bottom: 3px solid var(--gold); }
+  .article-hero-image { width: 100%; max-height: 480px; object-fit: cover; object-position: center 40%; display: block; }
+
+  .article-body { max-width: 760px; margin: 0 auto; padding: 64px 48px 80px; }
+
+  .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--gold); text-decoration: none; letter-spacing: 1px; text-transform: uppercase; font-weight: 500; margin-bottom: 40px; transition: gap 0.2s; }
+  .back-link:hover { gap: 12px; }
+
+  .exec-summary { background: var(--off-wht); border: 1px solid #E0DDD8; border-left: 5px solid var(--navy); padding: 32px 36px; margin-bottom: 56px; border-radius: 0 2px 2px 0; }
+  .exec-summary-label { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--navy); margin-bottom: 16px; }
+  .exec-summary p { font-size: 15px; color: #2A2A3E; line-height: 1.75; margin-bottom: 14px; }
+  .exec-summary p:last-child { margin-bottom: 0; font-style: italic; color: var(--navy); font-weight: 500; }
+
+  .article-body h2 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: var(--navy); margin-bottom: 20px; margin-top: 52px; line-height: 1.2; }
+  .article-body p { font-size: 16px; color: #2A2A3E; line-height: 1.8; margin-bottom: 24px; }
+
+  .pull-quote { border-left: 3px solid var(--gold); padding: 8px 0 8px 28px; margin: 40px 0; }
+  .pull-quote p { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: var(--navy); line-height: 1.45; margin: 0; font-weight: 400; }
+
+  .audit-questions { background: var(--navy); padding: 36px 40px; margin: 40px 0; border-radius: 2px; }
+  .audit-questions-label { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .audit-question { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(201,168,76,0.15); align-items: flex-start; }
+  .audit-question:last-child { border-bottom: none; }
+  .audit-q-num { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--gold); min-width: 32px; line-height: 1.3; }
+  .audit-q-text { font-size: 15px; color: var(--gold-lt); line-height: 1.6; }
+  .audit-q-text strong { color: var(--white); display: block; margin-bottom: 4px; font-size: 14px; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 40px 0; }
+  .stat-block { background: var(--light-grey); padding: 28px 24px; border-top: 3px solid var(--gold); text-align: center; }
+  .stat-number { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 600; color: var(--navy); line-height: 1; margin-bottom: 8px; }
+  .stat-label { font-size: 12px; color: var(--grey); line-height: 1.4; font-weight: 500; }
+  .stat-source { font-size: 10px; color: #AAAAAA; margin-top: 8px; font-style: italic; }
+
+  .reg-callout { background: var(--off-wht); border: 1px solid #E0DDD8; border-left: 4px solid var(--navy); padding: 28px 32px; margin: 40px 0; border-radius: 0 2px 2px 0; }
+  .reg-callout-label { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--navy); margin-bottom: 12px; }
+  .reg-callout p { font-size: 14.5px; color: #2A2A3E; margin-bottom: 8px; line-height: 1.65; }
+  .reg-callout p:last-child { margin-bottom: 0; }
+
+  .ga-helps { background: var(--navy); padding: 40px 36px; margin: 48px 0; border-radius: 2px; }
+  .ga-helps-label { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .ga-helps h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; color: var(--white); margin-bottom: 20px; line-height: 1.3; }
+  .ga-helps p { font-size: 15px; color: var(--gold-lt); line-height: 1.7; margin-bottom: 16px; }
+  .ga-helps p:last-child { margin-bottom: 0; }
+  .deliverable-list { list-style: none; margin: 20px 0; }
+  .deliverable-list li { font-size: 14.5px; color: var(--gold-lt); padding: 8px 0; padding-left: 20px; position: relative; border-bottom: 1px solid rgba(201,168,76,0.15); line-height: 1.5; }
+  .deliverable-list li:last-child { border-bottom: none; }
+  .deliverable-list li::before { content: "→"; position: absolute; left: 0; color: var(--gold); font-size: 13px; }
+
+  .closing-quote { text-align: center; padding: 48px 0 0; border-top: 1px solid #E0DDD8; margin-top: 56px; }
+  .closing-quote blockquote { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-style: italic; color: var(--navy); line-height: 1.45; margin-bottom: 16px; font-weight: 400; }
+  .closing-quote cite { font-size: 12px; color: var(--grey); font-style: normal; letter-spacing: 1px; text-transform: uppercase; }
+
+  .article-cta { background: var(--off-wht); border: 1px solid #E0DDD8; padding: 36px; margin-top: 56px; text-align: center; border-radius: 2px; }
+  .article-cta p { font-size: 15px; color: var(--grey); margin-bottom: 20px; }
+  .btn-primary { display: inline-block; background: var(--gold); color: var(--navy); font-family: 'Inter', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 14px 32px; text-decoration: none; border-radius: 2px; transition: background 0.2s; }
+  .btn-primary:hover { background: var(--gold-lt); }
+
+  footer { background: #11153A; padding: 24px 48px; text-align: center; border-top: 1px solid rgba(201,168,76,0.2); }
+  footer p { font-size: 12px; color: #6677AA; }
+  footer a { color: #6677AA; text-decoration: none; }
+
+  @media (max-width: 640px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .article-hero { padding: 48px 20px 40px; }
+    .article-body { padding: 40px 20px 60px; }
+    .exec-summary { padding: 24px 20px; }
+    .ga-helps { padding: 28px 20px; }
+    .audit-questions { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">GREYWOOD <span>Analytics</span></a>
+  <ul class="nav-links">
+    <li><a href="/#solution">What We Do</a></li>
+    <li><a href="/#deliverables">Deliverables</a></li>
+    <li><a href="/#why">Why Us</a></li>
+    <li><a href="/insights.html">Insights</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <div class="article-meta">
+      <span class="article-tag">Data Lineage</span>
+      <span class="article-number">Executive Brief 004</span>
+    </div>
+    <h1>The Data Lineage Gap BCBS 239 Was Supposed to Close</h1>
+    <div class="article-hero-divider"></div>
+    <p class="article-standfirst">BCBS 239 has required systemically important banks to trace every number in a risk report back to its source since 2016. More than a decade on, most institutions still cannot fully do it — and the break in the chain is usually sitting in a spreadsheet nobody catalogued.</p>
+  </div>
+</div>
+
+<div class="article-hero-image-wrap">
+  <img src="Article_4_Image.png" alt="Data lineage diagram and risk reporting documents spread across a desk" class="article-hero-image">
+</div>
+
+<div class="article-body">
+
+  <a href="/insights.html" class="back-link">← Back to Insights</a>
+
+  <div class="exec-summary">
+    <div class="exec-summary-label">Executive Summary</div>
+    <p>The Basel Committee published BCBS 239 — "Principles for effective risk data aggregation and risk reporting" — in January 2013, in direct response to the financial crisis exposing how little visibility large banks actually had into their own risk exposures. It came into force for Globally Systemically Important Banks in 2016, with equivalent expectations extended to Domestically Systemically Important Banks by national regulators, including the PRA in the UK.</p>
+    <p>Its core demand is deceptively simple: a bank must be able to trace any number in a risk report back to its original source, through every system and transformation it passed through along the way. In practice, that chain of traceability — data lineage — breaks most often not in the core banking systems it was designed for, but in the manual spreadsheets and offline processes sitting quietly between them.</p>
+    <p>A decade of implementation has not closed this gap. It has mostly relocated it.</p>
+  </div>
+
+  <h2>Why data lineage became a regulatory requirement</h2>
+
+  <p>Before the 2008 financial crisis, few regulators asked banks a question as basic as: can you show us exactly where this number came from? When the crisis hit, many large banks discovered they could not answer it quickly enough — risk exposures were aggregated from fragmented systems, reconciled manually, and reported with limited ability to trace a figure back to its origin under stress.</p>
+
+  <p>BCBS 239 was the Basel Committee's response. It sets out 14 principles across four areas — governance, risk data aggregation capabilities, risk reporting practices, and supervisory review — with the underlying expectation that a bank's risk data infrastructure should be accurate, complete, and fully traceable, especially when it matters most.</p>
+
+  <div class="pull-quote">
+    <p>"Data lineage was never really about the technology. It was about being able to answer one question under pressure: where did this number actually come from?"</p>
+  </div>
+
+  <p>The principles were written with core banking and risk systems in mind — data warehouses, risk engines, regulatory reporting platforms. What they did not anticipate, or at least did not solve for, was how much of the "last mile" of risk reporting still runs through spreadsheets: manual adjustments, offline reconciliations, and bridge calculations sitting between the formal systems and the final report.</p>
+
+  <div class="stat-grid">
+    <div class="stat-block">
+      <div class="stat-number">14</div>
+      <div class="stat-label">principles across governance, aggregation, reporting and supervisory review</div>
+      <div class="stat-source">Source: Basel Committee on Banking Supervision</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-number">2 of 31</div>
+      <div class="stat-label">G-SIBs assessed as fully compliant with BCBS 239 in the Basel Committee's most recent review</div>
+      <div class="stat-source">Source: PwC summary of Basel Committee assessment, 2024</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-number">2013</div>
+      <div class="stat-label">the year BCBS 239 was published — data lineage remains a live implementation challenge more than a decade on</div>
+      <div class="stat-source">Source: BIS supervisory newsletter, January 2026</div>
+    </div>
+  </div>
+
+  <h2>Where the lineage chain actually breaks</h2>
+
+  <p>When you trace a risk report back through its lineage, the break rarely happens inside a core system. Core systems, whatever their flaws, are at least documented, owned, and subject to change control. The break happens at the handoff points — the moments where data leaves a governed system and passes through a human being with a spreadsheet.</p>
+
+  <div class="audit-questions">
+    <div class="audit-questions-label">The Five Break Points</div>
+
+    <div class="audit-question">
+      <div class="audit-q-num">01</div>
+      <div class="audit-q-text">
+        <strong>The manual re-key</strong>
+        A number is exported from one system and typed or pasted into another. The lineage tool tracks the system boundary — it does not track the person, or whether they copied the right cell.
+      </div>
+    </div>
+
+    <div class="audit-question">
+      <div class="audit-q-num">02</div>
+      <div class="audit-q-text">
+        <strong>The undocumented adjustment</strong>
+        A "small correction" is applied in a spreadsheet before the number moves onward — a rounding fix, a manual override, a known exception. It is rarely written down anywhere the lineage documentation would capture.
+      </div>
+    </div>
+
+    <div class="audit-question">
+      <div class="audit-q-num">03</div>
+      <div class="audit-q-text">
+        <strong>The offline reconciliation</strong>
+        Two systems disagree, so someone reconciles the difference by hand in a spreadsheet before reporting the reconciled figure. The reconciliation logic — the actual explanation for the number — usually exists nowhere but that file.
+      </div>
+    </div>
+
+    <div class="audit-question">
+      <div class="audit-q-num">04</div>
+      <div class="audit-q-text">
+        <strong>The version without a name</strong>
+        Multiple copies of the same working file circulate — "final," "final v2," "final v2 (Bob's version)." Lineage tooling records which system fed the report. It does not know which of six near-identical spreadsheets was actually used.
+      </div>
+    </div>
+
+    <div class="audit-question">
+      <div class="audit-q-num">05</div>
+      <div class="audit-q-text">
+        <strong>The spreadsheet that became permanent</strong>
+        A tool built as a temporary bridge during a systems migration is still in daily use years later. Nobody re-scoped it as a permanent part of the lineage because, officially, it was never meant to still be there.
+      </div>
+    </div>
+  </div>
+
+  <p>None of these five points require a technology failure. Each one is a perfectly ordinary, well-intentioned human workaround — which is exactly why lineage tooling, built to trace systems rather than people, consistently misses them.</p>
+
+  <div class="reg-callout">
+    <div class="reg-callout-label">Regulatory Context — BCBS 239 and the Data Architecture Principle</div>
+    <p>BCBS 239's data architecture and IT infrastructure principle expects banks to have systems capable of generating accurate risk data during business-as-usual and under stress, with minimal manual intervention. A January 2026 supervisory newsletter from the Basel Committee explicitly named data lineage as one of the recurring challenges raised in industry outreach sessions — more than a decade after the principles were first published.</p>
+    <p>For firms with material EUC assets sitting in the reporting chain, this is not a historic implementation problem that has been solved and moved past. It is a live, currently acknowledged supervisory concern.</p>
+  </div>
+
+  <div class="ga-helps">
+    <div class="ga-helps-label">How Greywood Analytics Helps</div>
+    <h3>Making the invisible handoffs visible.</h3>
+    <p>A Greywood Analytics deconstruction engagement treats every EUC sitting inside a regulatory reporting chain as a lineage break point to be documented, not an inconvenience to be worked around. For each asset in scope, we deliver:</p>
+    <ul class="deliverable-list">
+      <li><strong>Plain English Summary</strong> — what the asset does, what feeds it, and what it feeds into, in language a data governance team and a Board member can both use.</li>
+      <li><strong>Dependency Map</strong> — every upstream input and downstream output mapped explicitly, closing the exact gap that system-level lineage tools cannot see.</li>
+      <li><strong>Dependency Mapping Narrative</strong> — the reconciliation logic, manual adjustments, and version history written down in one place for the first time.</li>
+      <li><strong>Risk & Assumption Narrative</strong> — every undocumented assumption and manual intervention point identified and rated for materiality.</li>
+      <li><strong>Risk Register</strong> — a prioritised remediation plan your data governance and risk functions can act on immediately.</li>
+    </ul>
+    <p>The result is a lineage record that actually reflects how the number got there — not just which systems it technically touched.</p>
+    <p>First deliverable pack typically received within 2–3 working days of engagement start.</p>
+  </div>
+
+  <h2>Why this rarely gets fixed on its own</h2>
+
+  <p>Nobody sets out to build an untraceable reporting chain. Each individual workaround was a reasonable response to a real, immediate problem — a system that didn't quite talk to another, a deadline that couldn't move, a reconciliation that had to happen somehow. The gap accumulates one small, sensible decision at a time.</p>
+
+  <p>That is precisely why it rarely gets fixed proactively. There is no single moment where someone decides to build an ungoverned reporting chain, so there is rarely a single moment where someone decides to fix it either — until an audit, a regulator, or a bad number forces the question.</p>
+
+  <div class="closing-quote">
+    <blockquote>"Lineage tooling tells you which systems a number passed through. It rarely tells you which person, and which spreadsheet, actually decided what that number would be."</blockquote>
+    <cite>Greywood Analytics</cite>
+  </div>
+
+  <div class="article-cta">
+    <p>If your data lineage documentation stops at the system boundary and starts trusting the humans in between, we should have a conversation. Every engagement begins with a no-commitment scoping discussion.</p>
+    <a href="mailto:yemi.michael@greywoodanalytics.com" class="btn-primary">Start a Conversation</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2025 Greywood Analytics · EUC Deconstruction for Financial Services · <a href="mailto:yemi.michael@greywoodanalytics.com">yemi.michael@greywoodanalytics.com</a> · <a href="/">greywoodanalytics.com</a></p>
+</footer>
+
+</body>
+</html>

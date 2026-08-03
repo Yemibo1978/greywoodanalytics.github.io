@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" href="/favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The £6 Billion Formula Error: Why Nobody Checks the Spreadsheet | Greywood Analytics</title>
+<meta name="description" content="No regulation is needed for an unvalidated spreadsheet to drive a catastrophic business decision. Three real, documented cases — and why almost nobody independently checks the numbers behind their biggest calls.">
+<meta name="keywords" content="spreadsheet risk, spreadsheet errors, decision risk, EUC governance, operational risk, financial services, model validation">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:    #1A1F4E;
+    --gold:    #C9A84C;
+    --gold-lt: #E8D5A3;
+    --white:   #FFFFFF;
+    --off-wht: #F8F6F2;
+    --grey:    #6B7280;
+    --dark:    #1A1A2E;
+    --light-grey: #F1F0EE;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; color: var(--dark); background: var(--white); line-height: 1.7; }
+
+  nav {
+    background: var(--navy); padding: 16px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 100;
+  }
+  .nav-brand { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 17px; color: var(--gold); letter-spacing: 2px; text-decoration: none; text-transform: uppercase; }
+  .nav-brand span { font-weight: 300; color: var(--gold-lt); font-style: italic; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { color: var(--gold-lt); text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+
+  .article-hero { background: var(--navy); padding: 72px 48px 56px; }
+  .article-hero-inner { max-width: 760px; margin: 0 auto; }
+  .article-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+  .article-tag { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--navy); background: var(--gold); padding: 4px 12px; border-radius: 2px; }
+  .article-number { font-size: 12px; color: #8899BB; letter-spacing: 1px; }
+  .article-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 52px); font-weight: 600; color: var(--white); line-height: 1.15; margin-bottom: 20px; }
+  .article-hero-divider { width: 48px; height: 2px; background: var(--gold); margin: 24px 0; }
+  .article-standfirst { font-size: 17px; color: var(--gold-lt); line-height: 1.65; font-weight: 300; }
+
+  .article-hero-image-wrap { overflow: hidden; border-bottom: 3px solid var(--gold); }
+  .article-hero-image { width: 100%; max-height: 480px; object-fit: cover; object-position: center 40%; display: block; }
+
+  .article-body { max-width: 760px; margin: 0 auto; padding: 64px 48px 80px; }
+
+  .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--gold); text-decoration: none; letter-spacing: 1px; text-transform: uppercase; font-weight: 500; margin-bottom: 40px; transition: gap 0.2s; }
+  .back-link:hover { gap: 12px; }
+
+  .exec-summary { background: var(--off-wht); border: 1px solid #E0DDD8; border-left: 5px solid var(--navy); padding: 32px 36px; margin-bottom: 56px; border-radius: 0 2px 2px 0; }
+  .exec-summary-label { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--navy); margin-bottom: 16px; }
+  .exec-summary p { font-size: 15px; color: #2A2A3E; line-height: 1.75; margin-bottom: 14px; }
+  .exec-summary p:last-child { margin-bottom: 0; font-style: italic; color: var(--navy); font-weight: 500; }
+
+  .article-body h2 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: var(--navy); margin-bottom: 20px; margin-top: 52px; line-height: 1.2; }
+  .article-body p { font-size: 16px; color: #2A2A3E; line-height: 1.8; margin-bottom: 24px; }
+
+  .pull-quote { border-left: 3px solid var(--gold); padding: 8px 0 8px 28px; margin: 40px 0; }
+  .pull-quote p { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: var(--navy); line-height: 1.45; margin: 0; font-weight: 400; }
+
+  .case-list { background: var(--navy); padding: 36px 40px; margin: 40px 0; border-radius: 2px; }
+  .case-list-label { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .case-item { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid rgba(201,168,76,0.15); align-items: flex-start; }
+  .case-item:last-child { border-bottom: none; }
+  .case-num { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--gold); min-width: 32px; line-height: 1.3; }
+  .case-text { font-size: 15px; color: var(--gold-lt); line-height: 1.65; }
+  .case-text strong { color: var(--white); display: block; margin-bottom: 4px; font-size: 14.5px; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 40px 0; }
+  .stat-block { background: var(--light-grey); padding: 28px 24px; border-top: 3px solid var(--gold); text-align: center; }
+  .stat-number { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 600; color: var(--navy); line-height: 1; margin-bottom: 8px; }
+  .stat-label { font-size: 12px; color: var(--grey); line-height: 1.4; font-weight: 500; }
+  .stat-source { font-size: 10px; color: #AAAAAA; margin-top: 8px; font-style: italic; }
+
+  .reg-callout { background: var(--off-wht); border: 1px solid #E0DDD8; border-left: 4px solid var(--navy); padding: 28px 32px; margin: 40px 0; border-radius: 0 2px 2px 0; }
+  .reg-callout-label { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--navy); margin-bottom: 12px; }
+  .reg-callout p { font-size: 14.5px; color: #2A2A3E; margin-bottom: 8px; line-height: 1.65; }
+  .reg-callout p:last-child { margin-bottom: 0; }
+
+  .ga-helps { background: var(--navy); padding: 40px 36px; margin: 48px 0; border-radius: 2px; }
+  .ga-helps-label { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .ga-helps h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; color: var(--white); margin-bottom: 20px; line-height: 1.3; }
+  .ga-helps p { font-size: 15px; color: var(--gold-lt); line-height: 1.7; margin-bottom: 16px; }
+  .ga-helps p:last-child { margin-bottom: 0; }
+  .deliverable-list { list-style: none; margin: 20px 0; }
+  .deliverable-list li { font-size: 14.5px; color: var(--gold-lt); padding: 8px 0; padding-left: 20px; position: relative; border-bottom: 1px solid rgba(201,168,76,0.15); line-height: 1.5; }
+  .deliverable-list li:last-child { border-bottom: none; }
+  .deliverable-list li::before { content: "→"; position: absolute; left: 0; color: var(--gold); font-size: 13px; }
+
+  .closing-quote { text-align: center; padding: 48px 0 0; border-top: 1px solid #E0DDD8; margin-top: 56px; }
+  .closing-quote blockquote { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-style: italic; color: var(--navy); line-height: 1.45; margin-bottom: 16px; font-weight: 400; }
+  .closing-quote cite { font-size: 12px; color: var(--grey); font-style: normal; letter-spacing: 1px; text-transform: uppercase; }
+
+  .article-cta { background: var(--off-wht); border: 1px solid #E0DDD8; padding: 36px; margin-top: 56px; text-align: center; border-radius: 2px; }
+  .article-cta p { font-size: 15px; color: var(--grey); margin-bottom: 20px; }
+  .btn-primary { display: inline-block; background: var(--gold); color: var(--navy); font-family: 'Inter', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 14px 32px; text-decoration: none; border-radius: 2px; transition: background 0.2s; }
+  .btn-primary:hover { background: var(--gold-lt); }
+
+  footer { background: #11153A; padding: 24px 48px; text-align: center; border-top: 1px solid rgba(201,168,76,0.2); }
+  footer p { font-size: 12px; color: #6677AA; }
+  footer a { color: #6677AA; text-decoration: none; }
+
+  @media (max-width: 640px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .article-hero { padding: 48px 20px 40px; }
+    .article-body { padding: 40px 20px 60px; }
+    .exec-summary { padding: 24px 20px; }
+    .ga-helps { padding: 28px 20px; }
+    .case-list { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">GREYWOOD <span>Analytics</span></a>
+  <ul class="nav-links">
+    <li><a href="/#solution">What We Do</a></li>
+    <li><a href="/#deliverables">Deliverables</a></li>
+    <li><a href="/#why">Why Us</a></li>
+    <li><a href="/insights.html">Insights</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <div class="article-meta">
+      <span class="article-tag">Decision Risk</span>
+      <span class="article-number">Executive Brief 005</span>
+    </div>
+    <h1>The £6 Billion Formula Error: Why Nobody Checks the Spreadsheet</h1>
+    <div class="article-hero-divider"></div>
+    <p class="article-standfirst">No regulation is required for an unvalidated spreadsheet to drive a catastrophic decision. Three real, documented cases show what happens when nobody independently checks the numbers behind a major call — and why the same conditions exist in most organisations today.</p>
+  </div>
+</div>
+
+<div class="article-hero-image-wrap">
+  <img src="Article_5_Image.png" alt="Executive reviewing a financial spreadsheet model on a laptop with printed reports on the desk" class="article-hero-image">
+</div>
+
+<div class="article-body">
+
+  <a href="/insights.html" class="back-link">← Back to Insights</a>
+
+  <div class="exec-summary">
+    <div class="exec-summary-label">Executive Summary</div>
+    <p>Most conversations about EUC risk lead with a regulation — SS1/23, BCBS 239, an audit standard. This one does not need one. The plainest version of the problem needs no regulatory hook at all: an undocumented spreadsheet, built and maintained by one person, quietly informs a decision worth far more than anyone checked.</p>
+    <p>This has already happened, publicly, at organisations with more oversight than most. A trading model that understated risk. An academic paper that shaped fiscal policy in multiple countries. A bidding error that cost a mid-sized company millions. In each case the failure was not exotic — it was a formula, an assumption, or a copy-paste, sitting unvalidated in a spreadsheet that someone trusted.</p>
+    <p>The lesson is not "hire better analysts." It is that unvalidated tools eventually get relied upon for decisions they were never built to carry.</p>
+  </div>
+
+  <h2>Three decisions, three unvalidated spreadsheets</h2>
+
+  <p>These are not hypothetical scenarios constructed to make a point. Each is a matter of public record, and each involved competent, experienced people working inside organisations that had far more general oversight than the average business — which is exactly what makes them worth knowing.</p>
+
+  <div class="case-list">
+    <div class="case-list-label">Three Documented Cases</div>
+
+    <div class="case-item">
+      <div class="case-num">01</div>
+      <div class="case-text">
+        <strong>JPMorgan's "London Whale" — c. $6 billion trading loss (2012)</strong>
+        A risk model used to assess the bank's Synthetic Credit Portfolio relied on a spreadsheet where a calculation divided by a sum instead of an average, understating the portfolio's risk. The error was one contributing factor in a trading loss that ultimately grew to roughly $6 billion and drew regulatory scrutiny on both sides of the Atlantic.
+      </div>
+    </div>
+
+    <div class="case-item">
+      <div class="case-num">02</div>
+      <div class="case-text">
+        <strong>Reinhart–Rogoff — an influential paper on debt and growth (2010)</strong>
+        A widely cited academic paper linking high government debt to lower economic growth, used to help justify austerity policy discussions in several countries, was later found to contain a spreadsheet formula that accidentally excluded several countries' data from the calculation — materially affecting the paper's headline result once corrected.
+      </div>
+    </div>
+
+    <div class="case-item">
+      <div class="case-num">03</div>
+      <div class="case-text">
+        <strong>TransAlta — approximately $24 million loss (2003)</strong>
+        A Canadian power company's contract bidding spreadsheet contained a copy-paste error that misaligned a set of hedging contracts, contributing to a loss of roughly $24 million on the mispriced positions.
+      </div>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    <p>"None of these organisations lacked talent. What they lacked, in each case, was a second set of eyes on a tool nobody had classified as important enough to check."</p>
+  </div>
+
+  <h2>Why nobody checks — and why that's normal, not negligent</h2>
+
+  <p>It's tempting to read these cases as failures of competence. They are better understood as a structural, entirely predictable pattern. A spreadsheet usually starts small, built quickly to solve an immediate problem by someone who understands it completely. Over time, its role quietly grows — more people rely on its output, more decisions sit downstream of it — but nobody formally re-assesses it as it grows, because no single moment ever marks the crossing from "minor tool" to "material input."</p>
+
+  <p>Independent validation is a routine, expected practice for models that carry a formal label — credit models, pricing models, regulatory capital models. It is almost never applied to the spreadsheet sitting just outside that formal boundary, even when its output feeds directly into a decision of comparable weight.</p>
+
+  <div class="stat-grid">
+    <div class="stat-block">
+      <div class="stat-number">94%</div>
+      <div class="stat-label">of operational spreadsheets examined across field audit studies contained at least one error</div>
+      <div class="stat-source">Source: Panko, weighted average across 88 field-audited spreadsheets</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-number">$6bn</div>
+      <div class="stat-label">approximate scale of JPMorgan's "London Whale" trading loss, with a spreadsheet error among the contributing factors</div>
+      <div class="stat-source">Source: public regulatory and press reporting, 2012–2013</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-number">0</div>
+      <div class="stat-label">the number of these three cases that required a banking regulator to be true — the risk exists with or without a regulatory trigger</div>
+      <div class="stat-source">Greywood Analytics analysis</div>
+    </div>
+  </div>
+
+  <div class="reg-callout">
+    <div class="reg-callout-label">Why this brief carries no regulatory citation</div>
+    <p>Every other Executive Brief in this series ties EUC risk to a specific regulatory obligation — SS1/23, BCBS 239, internal audit standards. This one deliberately does not, because the underlying risk does not require one. A business does not need to be a regulated bank, or subject to any particular supervisory statement, for an unverified spreadsheet to quietly drive a bad decision.</p>
+    <p>For organisations outside the most heavily regulated frameworks, this is often the most relevant door into the same conversation: not "are you compliant," but "do you actually know if the numbers behind your biggest decisions are right."</p>
+  </div>
+
+  <div class="ga-helps">
+    <div class="ga-helps-label">How Greywood Analytics Helps</div>
+    <h3>Independent validation for the tools nobody else is checking.</h3>
+    <p>A Greywood Analytics deconstruction engagement applies the same rigour to a business-critical spreadsheet that a regulated model would receive as standard — regardless of whether a regulation requires it. For each asset in scope, we deliver:</p>
+    <ul class="deliverable-list">
+      <li><strong>Plain English Summary</strong> — what the tool actually does, in language a decision-maker who didn't build it can verify against their own understanding.</li>
+      <li><strong>Dependency Map</strong> — every input, formula chain, and downstream use, surfacing exactly how far the tool's influence actually reaches.</li>
+      <li><strong>Dependency Mapping Narrative</strong> — the single points of failure and silent failure modes an independent reviewer, not the original builder, can identify.</li>
+      <li><strong>Risk & Assumption Narrative</strong> — every embedded assumption tested against whether it still holds true today.</li>
+      <li><strong>Risk Register</strong> — a clear, prioritised view of what to fix first, and why.</li>
+    </ul>
+    <p>The goal is simple: by the time a tool is influencing a major decision, someone other than its builder should have checked it.</p>
+    <p>First deliverable pack typically received within 2–3 working days of engagement start.</p>
+  </div>
+
+  <h2>The question worth asking this week</h2>
+
+  <p>Somewhere in most organisations sits a spreadsheet that has quietly become more important than anyone officially decided it should be — informing pricing, forecasting, resourcing, or a decision that will land on a Board table. It was never validated, because nobody ever formally noticed it needed to be.</p>
+
+  <p>The three cases above were not obscure or poorly run organisations. They are a reminder that scale and competence are not substitutes for independent verification — and that the gap is closeable, once someone actually looks for it.</p>
+
+  <div class="closing-quote">
+    <blockquote>"The question is rarely 'is our spreadsheet wrong.' It's 'when did we last check' — and for most business-critical tools, the honest answer is never."</blockquote>
+    <cite>Greywood Analytics</cite>
+  </div>
+
+  <div class="article-cta">
+    <p>If there's a spreadsheet quietly driving decisions in your organisation that nobody outside its original builder has ever checked, we should have a conversation. Every engagement begins with a no-commitment scoping discussion.</p>
+    <a href="mailto:yemi.michael@greywoodanalytics.com" class="btn-primary">Start a Conversation</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2025 Greywood Analytics · EUC Deconstruction for Financial Services · <a href="mailto:yemi.michael@greywoodanalytics.com">yemi.michael@greywoodanalytics.com</a> · <a href="/">greywoodanalytics.com</a></p>
+</footer>
+
+</body>
+</html>
