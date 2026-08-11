@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" href="/favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The EUC Nobody Migrated | Greywood Analytics</title>
+<meta name="description" content="Migration programmes close with a status of 'complete' while a handful of legacy EUCs keep quietly running in parallel — orphaned, unowned, and invisible to every governance framework that assumes the migration actually finished.">
+<meta name="keywords" content="EUC migration risk, legacy systems, data migration failure, EUC governance, financial services migration, shadow IT, SS1/23, BCBS 239">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:    #1A1F4E;
+    --gold:    #C9A84C;
+    --gold-lt: #E8D5A3;
+    --white:   #FFFFFF;
+    --off-wht: #F8F6F2;
+    --grey:    #6B7280;
+    --dark:    #1A1A2E;
+    --light-grey: #F1F0EE;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; color: var(--dark); background: var(--white); line-height: 1.7; }
+
+  nav {
+    background: var(--navy); padding: 16px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 100;
+  }
+  .nav-brand { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 17px; color: var(--gold); letter-spacing: 2px; text-decoration: none; text-transform: uppercase; }
+  .nav-brand span { font-weight: 300; color: var(--gold-lt); font-style: italic; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { color: var(--gold-lt); text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+
+  .article-hero { background: var(--navy); padding: 72px 48px 56px; }
+  .article-hero-inner { max-width: 760px; margin: 0 auto; }
+  .article-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+  .article-tag { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--navy); background: var(--gold); padding: 4px 12px; border-radius: 2px; }
+  .article-number { font-size: 12px; color: #8899BB; letter-spacing: 1px; }
+  .article-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 52px); font-weight: 600; color: var(--white); line-height: 1.15; margin-bottom: 20px; }
+  .article-hero-divider { width: 48px; height: 2px; background: var(--gold); margin: 24px 0; }
+  .article-standfirst { font-size: 17px; color: var(--gold-lt); line-height: 1.65; font-weight: 300; }
+
+  .article-hero-image-wrap { overflow: hidden; border-bottom: 3px solid var(--gold); }
+  .article-hero-image { width: 100%; max-height: 480px; object-fit: cover; object-position: center 40%; display: block; }
+
+  .article-body { max-width: 760px; margin: 0 auto; padding: 64px 48px 80px; }
+
+  .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--gold); text-decoration: none; letter-spacing: 1px; text-transform: uppercase; font-weight: 500; margin-bottom: 40px; transition: gap 0.2s; }
+  .back-link:hover { gap: 12px; }
+
+  .exec-summary { background: var(--off-wht); border: 1px solid #E0DDD8; border-left: 5px solid var(--navy); padding: 32px 36px; margin-bottom: 56px; border-radius: 0 2px 2px 0; }
+  .exec-summary-label { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--navy); margin-bottom: 16px; }
+  .exec-summary p { font-size: 15px; color: #2A2A3E; line-height: 1.75; margin-bottom: 14px; }
+  .exec-summary p:last-child { margin-bottom: 0; font-style: italic; color: var(--navy); font-weight: 500; }
+
+  .article-body h2 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: var(--navy); margin-bottom: 20px; margin-top: 52px; line-height: 1.2; }
+  .article-body p { font-size: 16px; color: #2A2A3E; line-height: 1.8; margin-bottom: 24px; }
+
+  .pull-quote { border-left: 3px solid var(--gold); padding: 8px 0 8px 28px; margin: 40px 0; }
+  .pull-quote p { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: var(--navy); line-height: 1.45; margin: 0; font-weight: 400; }
+
+  .case-list { background: var(--navy); padding: 36px 40px; margin: 40px 0; border-radius: 2px; }
+  .case-list-label { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .case-item { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid rgba(201,168,76,0.15); align-items: flex-start; }
+  .case-item:last-child { border-bottom: none; }
+  .case-num { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--gold); min-width: 32px; line-height: 1.3; }
+  .case-text { font-size: 15px; color: var(--gold-lt); line-height: 1.65; }
+  .case-text strong { color: var(--white); display: block; margin-bottom: 4px; font-size: 14.5px; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 40px 0; }
+  .stat-block { background: var(--light-grey); padding: 28px 24px; border-top: 3px solid var(--gold); text-align: center; }
+  .stat-number { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 600; color: var(--navy); line-height: 1; margin-bottom: 8px; }
+  .stat-label { font-size: 12px; color: var(--grey); line-height: 1.4; font-weight: 500; }
+  .stat-source { font-size: 10px; color: #AAAAAA; margin-top: 8px; font-style: italic; }
+
+  .reg-callout { background: var(--off-wht); border: 1px solid #E0DDD8; border-left: 4px solid var(--navy); padding: 28px 32px; margin: 40px 0; border-radius: 0 2px 2px 0; }
+  .reg-callout-label { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--navy); margin-bottom: 12px; }
+  .reg-callout p { font-size: 14.5px; color: #2A2A3E; margin-bottom: 8px; line-height: 1.65; }
+  .reg-callout p:last-child { margin-bottom: 0; }
+
+  .ga-helps { background: var(--navy); padding: 40px 36px; margin: 48px 0; border-radius: 2px; }
+  .ga-helps-label { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .ga-helps h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; color: var(--white); margin-bottom: 20px; line-height: 1.3; }
+  .ga-helps p { font-size: 15px; color: var(--gold-lt); line-height: 1.7; margin-bottom: 16px; }
+  .ga-helps p:last-child { margin-bottom: 0; }
+  .deliverable-list { list-style: none; margin: 20px 0; }
+  .deliverable-list li { font-size: 14.5px; color: var(--gold-lt); padding: 8px 0; padding-left: 20px; position: relative; border-bottom: 1px solid rgba(201,168,76,0.15); line-height: 1.5; }
+  .deliverable-list li:last-child { border-bottom: none; }
+  .deliverable-list li::before { content: "→"; position: absolute; left: 0; color: var(--gold); font-size: 13px; }
+
+  .closing-quote { text-align: center; padding: 48px 0 0; border-top: 1px solid #E0DDD8; margin-top: 56px; }
+  .closing-quote blockquote { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-style: italic; color: var(--navy); line-height: 1.45; margin-bottom: 16px; font-weight: 400; }
+  .closing-quote cite { font-size: 12px; color: var(--grey); font-style: normal; letter-spacing: 1px; text-transform: uppercase; }
+
+  .article-cta { background: var(--off-wht); border: 1px solid #E0DDD8; padding: 36px; margin-top: 56px; text-align: center; border-radius: 2px; }
+  .article-cta p { font-size: 15px; color: var(--grey); margin-bottom: 20px; }
+  .btn-primary { display: inline-block; background: var(--gold); color: var(--navy); font-family: 'Inter', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; padding: 14px 32px; text-decoration: none; border-radius: 2px; transition: background 0.2s; }
+  .btn-primary:hover { background: var(--gold-lt); }
+
+  footer { background: #11153A; padding: 24px 48px; text-align: center; border-top: 1px solid rgba(201,168,76,0.2); }
+  footer p { font-size: 12px; color: #6677AA; }
+  footer a { color: #6677AA; text-decoration: none; }
+
+  @media (max-width: 640px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .article-hero { padding: 48px 20px 40px; }
+    .article-body { padding: 40px 20px 60px; }
+    .exec-summary { padding: 24px 20px; }
+    .ga-helps { padding: 28px 20px; }
+    .case-list { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">GREYWOOD <span>Analytics</span></a>
+  <ul class="nav-links">
+    <li><a href="/#solution">What We Do</a></li>
+    <li><a href="/#deliverables">Deliverables</a></li>
+    <li><a href="/#why">Why Us</a></li>
+    <li><a href="/insights.html">Insights</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="article-hero">
+  <div class="article-hero-inner">
+    <div class="article-meta">
+      <span class="article-tag">Migration Risk</span>
+      <span class="article-number">Executive Brief 006</span>
+    </div>
+    <h1>The EUC Nobody Migrated</h1>
+    <div class="article-hero-divider"></div>
+    <p class="article-standfirst">A migration programme closes with a status of "complete." Somewhere behind it, a handful of spreadsheets and legacy tools are still quietly running the exact process they always did — orphaned, unowned, and invisible to every governance framework that assumes the migration actually finished.</p>
+  </div>
+</div>
+
+<div class="article-hero-image-wrap">
+  <img src="Article_6_Image.png" alt="An old, dust-covered laptop still running in a modern server room, cables trailing to a legacy terminal" class="article-hero-image">
+</div>
+
+<div class="article-body">
+
+  <a href="/insights.html" class="back-link">← Back to Insights</a>
+
+  <div class="exec-summary">
+    <div class="exec-summary-label">Executive Summary</div>
+    <p>Most conversations about EUC migration risk focus on assets that block a migration outright — the spreadsheet nobody understands, discovered mid-programme, causing delay. This brief is about a quieter, less-discussed cousin of that problem: the EUC that never gets blocked, never gets escalated, and never gets migrated at all. It just keeps running, in parallel with the new platform, because migrating it was harder than leaving it alone.</p>
+    <p>These assets are more dangerous than the ones that cause visible delays, precisely because they don't cause visible delays. The migration programme closes successfully. The steering committee signs off. Everyone moves on to the next priority. The spreadsheet, meanwhile, is still there — still feeding whatever it always fed, now completely outside anyone's active awareness.</p>
+    <p>A migration that "succeeds" on paper can still leave a real, unmanaged risk running quietly in the background.</p>
+  </div>
+
+  <h2>Why migration failure isn't the real risk here</h2>
+
+  <p>Data migration has a well-documented failure problem. Bloor Research's 2011 follow-up survey — one of the more rigorous, named studies on the topic — found that 38.3% of data migration projects overran their budget or timeline, or were aborted outright, with an average overrun cost of $268,000. Bloor's earlier 2007 survey put the figure at 84% of projects overrunning, running over budget, or being aborted outright — meaning the 2011 figures, stark as they are, actually represent a real improvement.</p>
+
+  <p>Those numbers describe migrations that visibly go wrong. But the asset this brief is concerned with belongs to a different category entirely: the migration that is declared a success, while one or two legacy tools are quietly excluded from that success — not through negligence exactly, but through a series of individually reasonable decisions that add up to something nobody actually chose.</p>
+
+  <div class="pull-quote">
+    <p>"Nobody decides to leave an EUC behind. It happens through a series of small, reasonable trade-offs that nobody adds up until much later."</p>
+  </div>
+
+  <h2>Five ways an EUC survives its own migration</h2>
+
+  <p>In our experience, legacy EUCs don't survive a migration by accident. They survive through one of a small number of recognisable patterns — each individually understandable, none of them intended to create lasting risk.</p>
+
+  <div class="case-list">
+    <div class="case-list-label">The Five Survival Patterns</div>
+
+    <div class="case-item">
+      <div class="case-num">01</div>
+      <div class="case-text">
+        <strong>The parking lot</strong>
+        Under budget or timeline pressure, the hardest-to-migrate assets get deferred "to phase 2." Phase 2 is rarely funded with the same urgency as phase 1, and the asset quietly becomes permanent.
+      </div>
+    </div>
+
+    <div class="case-item">
+      <div class="case-num">02</div>
+      <div class="case-text">
+        <strong>The compatibility workaround</strong>
+        The new platform doesn't fully replicate a piece of legacy logic, so a spreadsheet is built to bridge the gap "temporarily" during go-live. Temporary bridges are rarely revisited once the pressure of go-live has passed.
+      </div>
+    </div>
+
+    <div class="case-item">
+      <div class="case-num">03</div>
+      <div class="case-text">
+        <strong>The output nobody rebuilt</strong>
+        The underlying data moves to the new system, but a specific manual report built on top of the old one is never reconstructed — so the old spreadsheet chain stays alive, solely to produce that one output.
+      </div>
+    </div>
+
+    <div class="case-item">
+      <div class="case-num">04</div>
+      <div class="case-text">
+        <strong>The team that disbanded</strong>
+        The migration is marked complete in the steering committee minutes. The project team disperses to other work. Nobody was ever formally assigned ownership of the leftover asset — so it simply continues, unowned.
+      </div>
+    </div>
+
+    <div class="case-item">
+      <div class="case-num">05</div>
+      <div class="case-text">
+        <strong>The audit blind spot</strong>
+        Because the migration is officially closed, risk registers and audit trackers are updated to reflect the new platform. The leftover asset no longer appears anywhere in active risk tracking — not because it was assessed and cleared, but because it was never re-added to the list.
+      </div>
+    </div>
+  </div>
+
+  <p>Each of these is individually minor. Together, they explain how a well-run migration programme can close successfully while still leaving a genuine, ungoverned risk quietly operating in its shadow.</p>
+
+  <div class="stat-grid">
+    <div class="stat-block">
+      <div class="stat-number">38.3%</div>
+      <div class="stat-label">of data migration projects overran budget or timeline, or were aborted, in Bloor Research's follow-up survey</div>
+      <div class="stat-source">Source: Bloor Research, Data Migration Survey, 2011</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-number">$268k</div>
+      <div class="stat-label">average cost overrun on data migration projects that ran over budget or schedule</div>
+      <div class="stat-source">Source: Bloor Research, Data Migration Survey, 2011</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-number">0</div>
+      <div class="stat-label">the number of formal ownership decisions typically made for an EUC everyone assumes was "already migrated"</div>
+      <div class="stat-source">Greywood Analytics analysis</div>
+    </div>
+  </div>
+
+  <div class="reg-callout">
+    <div class="reg-callout-label">Regulatory Context — SS1/23 and the "closed programme" gap</div>
+    <p>SS1/23's first principle requires firms to identify and classify all models — including EUCs — as part of an ongoing model inventory, not a one-time exercise tied to a specific programme's timeline. An asset left behind after a migration programme closes doesn't stop being a model in scope; it simply stops being tracked as one, because the inventory process that would have caught it was tied to a project that has since ended.</p>
+    <p>The same applies under BCBS 239: a leftover EUC that still feeds a regulatory return breaks data lineage in exactly the same way an unmigrated asset would — the only difference is that everyone involved believes the migration is finished, which makes the gap harder to find, not less real.</p>
+  </div>
+
+  <div class="ga-helps">
+    <div class="ga-helps-label">How Greywood Analytics Helps</div>
+    <h3>Closing the gap a "complete" migration leaves open.</h3>
+    <p>A Greywood Analytics deconstruction engagement is equally suited to assets discovered mid-migration and assets discovered after a migration has already closed. For each asset in scope, we deliver:</p>
+    <ul class="deliverable-list">
+      <li><strong>Plain English Summary</strong> — what the asset still does, and why it's still running after the programme it belonged to has closed.</li>
+      <li><strong>Dependency Map</strong> — every input and output the asset still touches, including any connections to the new platform it was meant to be replaced by.</li>
+      <li><strong>Dependency Mapping Narrative</strong> — the specific reason the asset survived migration, documented so the decision is finally visible rather than accidental.</li>
+      <li><strong>Risk & Assumption Narrative</strong> — a clear assessment of what depends on this asset today, and what the actual cost of finally decommissioning or documenting it looks like.</li>
+      <li><strong>Risk Register</strong> — the asset formally re-entered into active risk tracking, closing the audit blind spot directly.</li>
+    </ul>
+    <p>A migration programme that closes on paper shouldn't mean a governance gap stays open in practice.</p>
+    <p>First deliverable pack typically received within 2–3 working days of engagement start.</p>
+  </div>
+
+  <h2>The question worth asking after "migration complete"</h2>
+
+  <p>If your organisation completed a system migration in the last few years, it's worth asking a simple question: does anyone currently own the legacy tools that didn't quite make the cut? Not "were they migrated" — but "did anyone actually decide what would happen to the ones that weren't."</p>
+
+  <p>For most organisations, the honest answer is that nobody made that decision. It simply happened, one deferred phase-2 item and one disbanded project team at a time.</p>
+
+  <div class="closing-quote">
+    <blockquote>"A migration programme can close successfully and still leave something running that nobody would sign their name to today."</blockquote>
+    <cite>Greywood Analytics</cite>
+  </div>
+
+  <div class="article-cta">
+    <p>If a recent migration programme left one or two legacy tools quietly running in parallel, we should have a conversation. Every engagement begins with a no-commitment scoping discussion.</p>
+    <a href="mailto:yemi.michael@greywoodanalytics.com" class="btn-primary">Start a Conversation</a>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2025 Greywood Analytics · EUC Deconstruction for Financial Services · <a href="mailto:yemi.michael@greywoodanalytics.com">yemi.michael@greywoodanalytics.com</a> · <a href="/">greywoodanalytics.com</a></p>
+</footer>
+
+</body>
+</html>
